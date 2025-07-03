@@ -1,7 +1,15 @@
+---
+title: "Final Project CafeHub Loyalty Program Analysis"
+output: github_document
+---
+
 # ================================================
 # CafeHub Loyalty Program Analysis
 # Module 5 - Final Project
 # ================================================
+```{r}
+library(dplyr)
+```
 
 # ================================================
 # Graded Challenge 1: Data Import & Cleaning
@@ -17,21 +25,27 @@
 # Import and prepare data
 # Store in: customer_data, loyalty_data
 
-# Recall that read.csv(file_name) is the function to import csv files into our programming environment. # nolint: line_length_linter.
+# Recall that read.csv(file_name) is the function to import csv files into our programming environment.
 
 
 # Import data files
+```{r}
 customer_data <- read.csv("customer_data.csv", stringsAsFactors = FALSE)
 loyalty_data <- read.csv("loyalty_data.csv", stringsAsFactors = FALSE)
+```
 
 # Print Customer Data
+```{r}
 print(head(customer_data))
-
+```
 # Print Loyalty Data
+```{r}
 print(head(loyalty_data))
-
+```
 # Check Customer Data Structure:
+```{r}
 print(str(customer_data))  # Check structure
+```
 
 # ================================================
 # Graded Challenge 2: Customer Analysis
@@ -46,17 +60,19 @@ print(str(customer_data))  # Check structure
 
 ### GRADED CHALLENGE 2 ###
 
-library(dplyr)
+
 # Filter Customer Data for Ages > 30
 # Store results in: Above_30
-
-Above_30 <- customer_data %>% filter(Age > 30) # nolint
+```{r}
+Above_30 <- customer_data %>% filter(Age > 30) # nolint: object_name_linter.
 print(Above_30)
+```
 
 # Filter Data for Female customers who bought Smoothies. Save in df_filtered
-df_filtered <- customer_data %>% filter(Product == "Smoothie" & Gender == "Female") # nolint: line_length_linter.
+```{r}
+df_filtered <- customer_data %>% filter(Product == "Smoothie" & Gender == "Female") # nolint
 print(df_filtered)
-
+```
 
 # ================================================
 # Graded Challenge 3: Loyalty Program Analysis
@@ -74,14 +90,34 @@ print(df_filtered)
 # Bronze under 200 points
 # Add "Tier" column to loyalty_data
 
+# ================================================
+# Graded Challenge 3: Loyalty Program Analysis
+# (20 points)
+# ================================================
+
+# TODO: Analyze loyalty tiers
+# Requirements:
+# 1. Categorize customers into tiers
+
+### GRADED CHALLENGE 3 ###
+# Create loyalty tier analysis based on the below point values:
+# Gold >= 500 points
+# Silver >= 200 points
+# Bronze under 200 points
+# Add "Tier" column to loyalty_data
+```{r}
 loyalty_data <- loyalty_data %>%
   mutate(Tier = case_when(
     LoyaltyPoints >= 500 ~ "Gold",
     LoyaltyPoints >= 200 ~ "Silver",
     TRUE ~ "Bronze"
   ))
+```
 
+# Print to verify
+```{r}
 print(head(loyalty_data))
+```
 
 # ================================================
 # Graded Challenge 4: Report Generation
@@ -92,17 +128,26 @@ print(head(loyalty_data))
 # Requirements:
 # 1. Generate a report.
 
+# Convert purchase date to Date type if needed
+```{r}
 customer_data$Purchase.Date <- as.Date(customer_data$Purchase.Date)
-
+```
+# Select important columns (you can adjust based on your project focus)
+```{r}
 df_selected <- customer_data
+```
+
+```{r}
+print(head(df_selected))
+```
 
 ### GRADED CHALLENGE 4 ###
 # Generate and save report
 # Save to df_selected to 'revised_customer_data.csv' and loyalty_data to revised_loyalty_data.csv # nolint
-
+```{r}
 write.csv(df_selected, "revised_customer_data.csv", row.names = FALSE)
 write.csv(loyalty_data, "revised_loyalty_data.csv", row.names = FALSE)
-
+```
 
 # ================================================
 # Hints and Tips
