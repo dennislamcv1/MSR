@@ -83,13 +83,18 @@ upper_quantity <- Q3_quantity + 1.5 * IQR_quantity # nolint
 lower_price <- Q1_price - 1.5 * IQR_price # nolint
 upper_price <- Q3_price + 1.5 * IQR_price # nolint
 
-# Identify and Remove Outliers using filter() for UnitPrice (<= 1000) and Quantity (<=2) # nolint
-retail_df <- retail_df %>%
-  filter(Quantity >= lower_quantity & Quantity <= upper_quantity, # nolint
-         UnitPrice >= lower_price & UnitPrice <= upper_price)  # nolint
 
-# View cleaned data
-head(retail_df)
+# Identify and Remove Outliers using mutate, group_by, and filter()
+numeric_cols <- c("Quantity", "UnitPrice")
+retail_df <- retail_df %>%
+  group_by(Category) %>%
+  mutate(across(all_of(numeric_cols), ~ ifelse(. < quantile(., 0.25) - 1.5 * IQR(.) | . > quantile(., 0.75) + 1.5 * IQR(.), NA, .))) %>% # nolint
+  ungroup() %>%
+  filter(if_all(everything(), ~!is.na(.)))
+
+# Print a summary of retail_df after removing outliers
+removed_outliers <- summary(retail_df)
+print(removed_outliers)
 
 
 # ================================================

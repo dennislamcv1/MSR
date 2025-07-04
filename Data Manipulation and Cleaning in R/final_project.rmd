@@ -22,7 +22,7 @@ library(readr)
 library(dplyr)
 library(tidyr)
 library(stringr)
-
+library(ggplot2)
 retail_df <- read_csv("retail_set12.csv")
 ```
 
@@ -97,6 +97,19 @@ print(duplicates)
 ```{r}
 print(summary(retail_df))
 ```
+
+```{r}
+library(ggplot2)
+
+ggplot(retail_df, aes(y = Quantity)) +
+  geom_boxplot(fill = "skyblue", color = "darkblue", outlier.colour = "red") +
+  labs(title = "Boxplot of Quantity", y = "Quantity") +
+  theme_minimal()
+```
+
+
+
+
 ```{r}
 # Calculate IQR-based bounds
 Q1_quantity <- quantile(retail_df$Quantity, 0.25) # nolint
