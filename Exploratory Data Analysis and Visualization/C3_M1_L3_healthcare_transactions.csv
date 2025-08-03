@@ -1,0 +1,6 @@
+TransactionID,Clinic,TransactionDate,VaccineType,PatientID
+101,Central Health,2023-06-15,Flu,P001
+102,North Clinic,15/07/2023,Flu,P002
+103,Eastside Medical,2023-08-10,Flu,P003
+104,West Clinic,01/09/2023,Flu,P004
+105,Central Health,2023-10-25,Flu,P005

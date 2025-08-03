@@ -1,0 +1,6 @@
+TransactionID,StoreLocation,TransactionDate,Product,CustomerID
+201,Downtown,2023-03-05,Shoes,C101
+202,Suburban,05/04/2023,Shirt,C102
+203,Airport,2023-05-15,Watch,C103
+204,Online,15/06/2023,Sunglasses,C104
+205,Downtown,2023-07-20,Hat,C105
