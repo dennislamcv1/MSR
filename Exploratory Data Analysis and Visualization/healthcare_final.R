@@ -17,8 +17,6 @@ library(tidyverse)
 # Load dataset
 healthcare_df <- read_csv("healthcare_final.csv")
 
-
-
 # Step 2: Explore summary statistics. Save to "summary_stats" and print
 # Variables to create:
 # - mean_age # Mean Age
@@ -27,17 +25,17 @@ healthcare_df <- read_csv("healthcare_final.csv")
 # - range_cost # Difference of Max and Min Healthcare Cost
 
 summary_stats <- healthcare_df %>%
-    summarise(
+  summarise(
     mean_age = mean(Age, na.rm = TRUE),
     median_bmi = median(BMI, na.rm = TRUE),
     sd_cost = sd(HealthcareCost, na.rm = TRUE),
     range_cost = max(HealthcareCost, na.rm = TRUE) - min(HealthcareCost, na.rm = TRUE)
-    )
+  )
 
 print(summary_stats)
 
 # Step 3: Examine variable types using str() or glimpse()
-str(healthcare_df)  # Check structure of the dataset
+# < YOUR CODE HERE >
 
 # ================================================
 # Graded Challenge 2: Categorical Exploration & Bar Charts (20 points)
@@ -73,7 +71,7 @@ print(plot_region)
 # Use ggplot() to map:
 # - x = VisitType
 # - y = Count
-plot_visit <- ggplot(healthcare_df, aes(x = VisitType)) +
+plot_visit <-  ggplot(healthcare_df, aes(x = VisitType)) +
   geom_bar(fill = "lightgreen") +
   labs(title = "Count of Visit Types", x = "Visit Type", y = "Count")
 
@@ -88,32 +86,15 @@ print(plot_visit)
 # This helps us examine any relationship between age and cost
 
 plot_age_cost <- ggplot(healthcare_df, aes(x = Age, y = HealthcareCost)) +
-  geom_point(alpha = 0.6, color = "steelblue") +
-  labs(
-    title = "Scatter Plot of Age vs Healthcare Cost",
-    x = "Age",
-    y = "Healthcare Cost"
-  ) +
-  theme_minimal()
-
-print(plot_age_cost)
+  geom_point()
 
 # Step 2: Color-code the same plot as above by Smoker status
 # Using color helps highlight patterns for specific groups
 # Title the final plot "Cost vs Age by Smoker Status" using the labs title attribute.
 
-plot_age_cost <- ggplot(healthcare_df, aes(x = Age, y = HealthcareCost, color = Smoker)) +
-  geom_point(alpha = 0.6) +
-  labs(
-    title = "Cost vs Age by Smoker Status",
-    x = "Age",
-    y = "Healthcare Cost",
-    color = "Smoker"
-  ) +
-  theme_minimal()
-
-# Print the plot
-print(plot_age_cost)
+plot_age_cost <-  ggplot(healthcare_df, aes(x = Age, y = HealthcareCost, color = Smoker)) +
+  geom_point() +
+  labs(title = "Cost vs Age by Smoker Status")
 
 
 # ================================================
@@ -136,9 +117,6 @@ plot_cost_by_insurance <- ggplot(healthcare_df, aes(x = InsuranceProvider, y = H
   labs(title = "Healthcare Cost Distribution by Insurance Provider")
 
 # Use ggplotly() to make your boxplot interactive.
-ggplotly(plot_cost_by_insurance)
-
-
 
 # Step 4: Now look at how Region affects costs — and view this comparison separately for each Visit Type.
 # Create a second boxplot to show variation by VisitType across Regions
@@ -154,7 +132,6 @@ plot_visits_by_region <- ggplot(healthcare_df, aes(x = Region, y = HealthcareCos
   labs(title = "Cost by Region and Visit Type")
 
 # Use ggplotly() to make plot_visits_by_region interactive.
-ggplotly(plot_visits_by_region)
 
 
 # ================================================
@@ -167,8 +144,7 @@ ggplotly(plot_visits_by_region)
 
 healthcare_df <- healthcare_df %>%
   mutate(CostPerDay = HealthcareCost / DaysInHospital)
-    # Use the mutate() function from the dplyr package.
-    # Your column name should be called "CostPerDay" exactly - please do not change this
+
 
 
 # Step 2: Calculate summary statistics (mean, median, standard deviation) of CostPerDay for each Region. 
@@ -198,13 +174,7 @@ print(cost_summary)
 
 # Plot the final figure
 final_plot <- ggplot(healthcare_df, aes(x = Region, y = CostPerDay)) +
-  geom_boxplot(fill = "orange", outlier.color = "red", outlier.shape = 16, alpha = 0.7) +
-  labs(
-    title = "Cost Per Day by Region",
-    x = "Region",
-    y = "Cost Per Day"
-  ) +
-  theme_minimal()
+  geom_boxplot(fill = "orange") +
+  labs(title = "Cost Per Day by Region")
 
-# Display the plot
 print(final_plot)
