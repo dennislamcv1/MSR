@@ -1,0 +1,123 @@
+# ================================================
+# RetailTech Solutions - Basic Order Processing
+# Module 2 - Graded Lab - SOLUTION
+# ================================================
+
+# ================================================
+# Activity 1: Check Order Amount (30 points)
+# ================================================
+
+check_order_amount <- function(order_amount) {
+  # Input validation
+  if (order_amount <= 0) {
+    return("Invalid")
+  }
+  
+  # Check amount ranges
+  if (order_amount < 50) {
+    return("Low")
+  } else if (order_amount <= 100) {
+    return("Regular")
+  } else {
+    return("High")
+  }
+}
+
+# ================================================
+# Activity 2: Calculate Order Total (25 points)
+# ================================================
+
+calculate_total <- function(amount, is_member) {
+  # Validate input
+  if (amount <= 0) {
+    return("Invalid amount")
+  }
+  
+  # Calculate total with discount
+  if (is_member) {
+    return(amount * 0.9)  # 10% discount
+  } else {
+    return(amount)
+  }
+}
+
+# ================================================
+# Activity 3: Process Multiple Orders (25 points)
+# ================================================
+
+process_orders <- function(order_amounts) {
+  # Calculate results
+  large_orders <- sum(order_amounts > 100)
+  avg_amount <- mean(order_amounts)
+  
+  # Return results as list
+  return(list(
+    large_orders = large_orders,
+    average = avg_amount
+  ))
+}
+
+# ================================================
+# Activity 4: Basic Error Checking (20 points)
+# ================================================
+
+process_orders <- function(order_amounts) {
+  # Check for numeric input
+  if (!is.numeric(order_amounts)) {
+    return("Error: Non-numeric input")
+  }
+  
+  # Check for NA values
+  if (sum(is.na(order_amounts)) > 0) {
+    return("Error: Contains NA values")
+  }
+  # Calculate results
+  large_orders <- sum(order_amounts > 100)
+  avg_amount <- mean(order_amounts)
+  
+  # Return results as list
+  return(list(
+    large_orders = large_orders,
+    average = avg_amount
+  ))
+}
+
+# ================================================
+# Verification Tests
+# ================================================
+
+# Test Activity 1
+test_check_amount <- function() {
+  stopifnot(
+    check_order_amount(-10) == "Invalid",
+    check_order_amount(25) == "Low",
+    check_order_amount(75) == "Regular",
+    check_order_amount(150) == "High"
+  )
+  print("Activity 1 tests passed!")
+}
+
+# Test Activity 2
+test_calculate_total <- function() {
+  stopifnot(
+    calculate_total(100, TRUE) == 90,
+    calculate_total(100, FALSE) == 100,
+    calculate_total(-10, TRUE) == "Invalid amount"
+  )
+  print("Activity 2 tests passed!")
+}
+
+# Test Activity 3
+test_process_orders <- function() {
+  result <- process_orders(c(75, 120, 45, 200, 85))
+  stopifnot(
+    result$large_orders == 2,
+    abs(result$average - 105) < 0.01
+  )
+  print("Activity 3 tests passed!")
+}
+
+# Run all tests
+test_check_amount()
+test_calculate_total()
+test_process_orders()
